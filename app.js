@@ -10,6 +10,10 @@ app.use(body_parser.json()) // will help to get the body of the request
 
 app.use(express.static(path.join('.', '/static/'))) // allows browsing to my static folder
 
+// app.get('/getall.html',  async (request, response) => {
+//     response.sendFile(path.join(__dirname, '/static/get_all.html'))
+// })
+
 app.get('/api/employees', async (request, response) => {
     const employees = await data_base.raw("select * from company")
     employees.rows = employees.rows.map(e => {
@@ -51,6 +55,14 @@ app.patch('/api/employees/:id', async (request, response) => {
     for (key in request.body) {
         query.push(`${key}='${request.body[key]}'`)
     }
+
+    // easy way
+    //const updated_employee = request.body
+    //const employee_db = await data_base.raw(`select * from company where id = ${id}`)
+    //const result = await data_base.raw(`UPDATE company set name=?,age=?,address=?,salary=? where id=?`,
+        //[updated_employee.name ? updated_employee.name : employee_db.name, 
+         //updated_employee.age, updated_employee.address ? updated_employee.address : '', updated_employee.salary, id])    
+
     // name? query.push(`name='${name}'`) : null
     // address? query.push(`address='${address}'`) : null
     // salary? query.push(`salary=${salary}`) : null
@@ -105,6 +117,7 @@ app.post('/api/employees-create6', async (request, response) => {
     response.status(201).json({ result: "6 new employees created" })
 })
 
+// start
 app.listen(port, () => {
     console.log(`==== express server is up on port ${port}`);
 })
