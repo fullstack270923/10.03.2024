@@ -71,13 +71,13 @@ app.delete('/api/employees/:id', async (request, response) => {
     response.status(200).json({ result: result.rowCount ? "employee deleted" : "employee not found" })
 })
 
-app.delete('/api/delete-table', async (request, response) => {
+app.delete('/api/employees-delete-table', async (request, response) => {
     // delete table
     await data_base.raw(`DROP table company`)
     response.status(200).json({ status: "table-deleted" })
 })
 
-app.post('/api/create-table', async (request, response) => {
+app.post('/api/employees-create-table', async (request, response) => {
     await data_base.raw(`CREATE TABLE company (id SERIAL PRIMARY KEY, name TEXT NOT NULL UNIQUE,` +
         `age INT NOT NULL,` +
         `address CHAR(50),` +
